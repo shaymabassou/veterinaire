@@ -9,8 +9,6 @@ import { ProduitAlimentaire } from './produit-alimentaire.entity';
 import { CreateMedicamentDto } from './dto/create-medicament.dto';
 import { CreateMaterielConsommableDto } from './dto/create-materiel-consommable.dto';
 import { CreateProduitAlimentaireDto } from './dto/create-produit-alimentaire.dto';
-// import { CreateOrdonnanceDto } from './dto/create-ordonnance.dto';
-// import { Ordonnance } from './ordonnance.entity';
 import { UserService } from '../user/user.service';
 import { Animal } from '../animal/animal.entity';
 
@@ -20,7 +18,6 @@ export class StockService {
     @InjectModel('Medicament') private medicamentModel: Model<Medicament>,
     @InjectModel('MaterielConsommable') private materielConsommableModel: Model<MaterielConsommable>,
     @InjectModel('ProduitAlimentaire') private produitAlimentaireModel: Model<ProduitAlimentaire>,
-    // @InjectModel('Ordonnance') private ordonnanceModel: Model<Ordonnance>,
     @InjectModel('Animal') private animalModel: Model<Animal>,
     @Inject(forwardRef(() => UserService)) private userService: UserService,
   ) {}
@@ -47,51 +44,8 @@ export class StockService {
   async findAnimalById(animalId: string): Promise<Animal | null> {
     return this.animalModel.findById(animalId).exec();
   }
-
-  // async createOrdonnance(createOrdonnanceDto: CreateOrdonnanceDto): Promise<Ordonnance> {
-  //   const medicament = await this.findMedicamentById(createOrdonnanceDto.medicamentId);
-  //   if (!medicament) {
-  //     throw new NotFoundException('Medicament not found');
-  //   }
-
-  //   const animal = await this.findAnimalById(createOrdonnanceDto.animalId);
-  //   if (!animal) {
-  //     throw new NotFoundException('Animal not found');
-  //   }
-
-  //   const nouvelleOrdonnance = new this.ordonnanceModel({
-  //     dosage: createOrdonnanceDto.dosage,
-  //     nombreDeFoisParJour: createOrdonnanceDto.nombreDeFoisParJour,
-  //     medicament: medicament._id,
-  //     animalId: animal._id,
-  //   });
-
-  //   return nouvelleOrdonnance.save();
-  // }
-
-  // async getOrdonnanceById(id: string): Promise<Ordonnance> {
-  //   const ordonnance = await this.ordonnanceModel.findById(id).exec();
-  //   if (!ordonnance) {
-  //     throw new NotFoundException(`Ordonnance with ID ${id} not found`);
-  //   }
-  //   return ordonnance;
-  // }
-
-  // async updateOrdonnance(id: string, createOrdonnanceDto: CreateOrdonnanceDto): Promise<Ordonnance> {
-  //   const ordonnance = await this.ordonnanceModel.findByIdAndUpdate(id, createOrdonnanceDto, { new: true }).exec();
-  //   if (!ordonnance) {
-  //     throw new NotFoundException(`Ordonnance with ID ${id} not found`);
-  //   }
-  //   return ordonnance;
-  // }
-
-  // async deleteOrdonnance(id: string): Promise<{ message: string }> {
-  //   const ordonnance = await this.ordonnanceModel.findByIdAndDelete(id).exec();
-  //   if (!ordonnance) {
-  //     throw new NotFoundException(`Ordonnance with ID ${id} not found`);
-  //   }
-  //   return { message: 'Ordonnance deleted successfully' };
-  // }
+  
+  
 
   async getMedicamentById(id: string): Promise<Medicament> {
     const medicament = await this.medicamentModel.findById(id).exec();

@@ -1,20 +1,15 @@
 /* eslint-disable prettier/prettier */
+// main.ts
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import * as session from 'express-session';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-
-  // Configuration de express-session
-  app.use(
-    session({
-      secret: 'your_secret_key', // Changez ceci avec une clé sécurisée pour signer la session
-      resave: false,
-      saveUninitialized: false,
-    }),
-  );
-
+  app.enableCors({
+    origin: 'http://localhost:3001', // Remplacez par l'URL de votre frontend
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
+    credentials: true,
+  });
   await app.listen(3000);
 }
 bootstrap();

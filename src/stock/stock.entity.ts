@@ -4,9 +4,7 @@ import { Document } from 'mongoose';
 
 @Schema()
 export class Stock extends Document {
-  // @Prop({ required: true })
-  // id: string;
-
+ 
   @Prop({ required: true })
   nom: string;
 
