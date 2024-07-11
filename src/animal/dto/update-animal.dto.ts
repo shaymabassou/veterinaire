@@ -1,12 +1,14 @@
 /* eslint-disable prettier/prettier */
-import { IsString, IsInt,  IsOptional } from 'class-validator';
+/* update-animal.dto.ts */
+import { IsEnum,  IsString, IsNumber, IsOptional } from 'class-validator';
+import { Sex } from '../sex.enum';
 
 export class UpdateAnimalDto {
   @IsString()
   @IsOptional()
   race?: string;
 
-  @IsInt()
+  @IsNumber()
   @IsOptional()
   age?: number;
 
@@ -14,9 +16,9 @@ export class UpdateAnimalDto {
   @IsOptional()
   type?: string;
 
-  @IsString()
+  @IsEnum(Sex)
   @IsOptional()
-  sex?: string;
+  sex?: Sex;
 
   @IsString()
   @IsOptional()
@@ -24,5 +26,5 @@ export class UpdateAnimalDto {
 
   @IsString()
   @IsOptional()
-  clientId?: string; // Vous pouvez aussi décider de rendre ce champ non modifiable si besoin
+  clientId?: string;
 }

@@ -1,13 +1,14 @@
 /* eslint-disable prettier/prettier */
-import { IsString, IsNotEmpty, IsInt, IsMongoId } from 'class-validator';
+/* create-animal.dto.ts */
+import { IsEnum, IsNotEmpty, IsString, IsNumber } from 'class-validator';
+import { Sex } from '../sex.enum';
 
 export class CreateAnimalDto {
-
   @IsString()
   @IsNotEmpty()
   race: string;
 
-  @IsInt()
+  @IsNumber()
   @IsNotEmpty()
   age: number;
 
@@ -15,15 +16,15 @@ export class CreateAnimalDto {
   @IsNotEmpty()
   type: string;
 
-  @IsString()
+  @IsEnum(Sex)
   @IsNotEmpty()
-  sex: string;
+  sex: Sex;
 
   @IsString()
   @IsNotEmpty()
   identifier: string;
 
-  @IsMongoId()
   @IsString()
-  clientId: string; // Assurez-vous que clientId est une chaîne, car c'est l'identifiant de l'utilisateur
+  @IsNotEmpty()
+  clientId: string;
 }
