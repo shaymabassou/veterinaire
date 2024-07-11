@@ -3,6 +3,7 @@ import { Injectable, NotFoundException, OnModuleInit } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { User, Client } from './user.entity';
+import { Animal } from '../animal/animal.entity';
 import * as bcrypt from 'bcrypt';
 import { CreateClientDto } from './dto/create-client.dto';
 import { UpdateClientDto } from './dto/update-client.dto';
@@ -15,6 +16,7 @@ export class UserService implements OnModuleInit {
   constructor(
     @InjectModel(User.name) private readonly userModel: Model<User>,
     @InjectModel(Client.name) private readonly clientModel: Model<Client>,
+    @InjectModel(Animal.name) private readonly animalModel: Model<Animal>,
     @InjectModel(HistoriqueClient.name) private readonly historiqueClientModel: Model<HistoriqueClient>,
   ) {}
 
@@ -62,6 +64,19 @@ export class UserService implements OnModuleInit {
     return client;
   }
 
+  async findClientByAnimalId(animalId: string): Promise<Client> {
+    const animal = await this.animalModel.findById(animalId).exec();
+    if (!animal) {
+      throw new NotFoundException(`Animal with ID ${animalId} not found`);
+    }
+    
+    const client = await this.clientModel.findOne({ animalid: animalId }).exec();
+    if (!client) {
+      throw new NotFoundException(`Client with Animal ID ${animalId} not found`);
+    }
+    return client;
+  }
+
   async register(userData: Partial<User>): Promise<User> {
     const { email, password, firstname, lastname } = userData;
     const existingUser = await this.userModel.findOne({ email }).exec();
@@ -82,6 +97,12 @@ export class UserService implements OnModuleInit {
 
   async createClient(createClientDto: CreateClientDto): Promise<Client> {
     const { firstname, lastname, email, password, CIN, tel, adresse, dateNaissance, animalid } = createClientDto;
+
+    // Check if the animal with the given animalid exists in the database
+    const animalExists = await this.animalModel.findById(animalid).exec();
+    if (!animalExists) {
+      throw new NotFoundException(`Animal with ID ${animalid} not found`);
+    }
 
     // Vérifiez si l'utilisateur existe déjà
     const existingUser = await this.userModel.findOne({ email }).exec();
@@ -125,6 +146,10 @@ export class UserService implements OnModuleInit {
 
   async getClientById(clientId: string): Promise<Client> {
     return this.findClientById(clientId);
+  }
+
+  async getClientByAnimalId(animalId: string): Promise<Client> {
+    return this.findClientByAnimalId(animalId);
   }
 
   async addHistorique(clientId: string, createHistoriqueClientDto: CreateHistoriqueClientDto): Promise<HistoriqueClient> {

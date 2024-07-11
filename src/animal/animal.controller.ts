@@ -4,6 +4,8 @@ import { AnimalService } from './animal.service';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { CreateAnimalDto } from './dto/create-animal.dto';
 import { UpdateAnimalDto } from './dto/update-animal.dto';
+import { CreateHistoriqueAnimalDto } from './dto/create-historique-animal.dto';
+import { UpdateHistoriqueAnimalDto } from './dto/update-historique-animal.dto';
 import { RolesGuard } from 'src/auth/roles.guard';
 import { Roles } from 'src/auth/roles.decorator';
 import { Role } from 'src/auth/enum';
@@ -39,5 +41,37 @@ export class AnimalController {
   @Get()
   async getAllAnimals() {
     return this.animalService.getAllAnimals();
+  }
+
+  @Get('client/:clientId')
+  async getAnimalsByClientId(@Param('clientId') clientId: string) {
+    return this.animalService.getAnimalsByClientId(clientId);
+  }
+  
+  @Roles(Role.ADMIN)
+  @Post(':id/historique')
+  async addHistorique(@Param('id') animalId: string, @Body() createHistoriqueAnimalDto: CreateHistoriqueAnimalDto) {
+    return this.animalService.addHistorique(animalId, createHistoriqueAnimalDto);
+  }
+
+  @Get(':animalId/historique/:historiqueId')
+  async getHistoriqueById(@Param('animalId') animalId: string, @Param('historiqueId') historiqueId: string) {
+    return this.animalService.getHistoriqueById(historiqueId);
+  }
+
+  @Roles(Role.ADMIN)
+  @Put(':animalId/historique/:historiqueId')
+  async updateHistorique(
+    @Param('animalId') animalId: string,
+    @Param('historiqueId') historiqueId: string,
+    @Body() updateHistoriqueAnimalDto: UpdateHistoriqueAnimalDto,
+  ) {
+    return this.animalService.updateHistorique(historiqueId, updateHistoriqueAnimalDto);
+  }
+
+  @Roles(Role.ADMIN)
+  @Delete(':animalId/historique/:historiqueId')
+  async deleteHistorique(@Param('animalId') animalId: string, @Param('historiqueId') historiqueId: string) {
+    return this.animalService.deleteHistorique(historiqueId);
   }
 }

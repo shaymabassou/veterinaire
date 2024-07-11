@@ -1,8 +1,9 @@
 /* eslint-disable prettier/prettier */
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
-import { Medicament } from './medicament.entity';
+
 import * as mongoose from 'mongoose';
+import { Medicament } from 'src/stock/medicament.entity';
 
 @Schema()
 export class Ordonnance extends Document {

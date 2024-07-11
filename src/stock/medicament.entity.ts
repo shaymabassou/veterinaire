@@ -3,7 +3,8 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Stock } from './stock.entity';
 import * as mongoose from 'mongoose';
-import { Ordonnance } from './ordonnance.entity';
+import { Ordonnance } from 'src/ordonance/ordonnance.entity';
+
 
 @Schema()
 export class Medicament extends Stock {

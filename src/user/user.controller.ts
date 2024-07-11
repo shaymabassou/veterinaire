@@ -59,6 +59,13 @@ export class UserController {
   async getClientById(@Param('id') clientId: string) {
     return this.userService.getClientById(clientId);
   }
+  
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(Role.ADMIN)
+  @Get('clients/animal/:animalId')
+  async getClientByAnimalId(@Param('animalId') animalId: string) {
+    return this.userService.getClientByAnimalId(animalId);
+  }
 
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(Role.ADMIN)

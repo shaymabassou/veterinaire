@@ -1,11 +1,11 @@
 /* eslint-disable prettier/prettier */
 // src/stock/stock.controller.ts
-import { Controller, Post, Body, UseGuards, NotFoundException, Put, Param, Delete, Get } from '@nestjs/common';
+import { Controller, Post, Body, UseGuards, Put, Param, Delete, Get } from '@nestjs/common';
 import { StockService } from './stock.service';
 import { CreateMedicamentDto } from './dto/create-medicament.dto';
 import { CreateMaterielConsommableDto } from './dto/create-materiel-consommable.dto';
 import { CreateProduitAlimentaireDto } from './dto/create-produit-alimentaire.dto';
-import { CreateOrdonnanceDto } from './dto/create-ordonnance.dto';
+// import { CreateOrdonnanceDto } from './dto/create-ordonnance.dto';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { RolesGuard } from 'src/auth/roles.guard';
 import { Roles } from 'src/auth/roles.decorator';
@@ -34,15 +34,15 @@ export class StockController {
     return this.stockService.createProduitAlimentaire(createProduitAlimentaireDto);
   }
 
-  @Roles(Role.ADMIN)
-  @Post('ordonnance')
-  async createOrdonnance(@Body() createOrdonnanceDto: CreateOrdonnanceDto) {
-    try {
-      return this.stockService.createOrdonnance(createOrdonnanceDto);
-    } catch (error) {
-      throw new NotFoundException(error.message);
-    }
-  }
+  // @Roles(Role.ADMIN)
+  // @Post('ordonnance')
+  // async createOrdonnance(@Body() createOrdonnanceDto: CreateOrdonnanceDto) {
+  //   try {
+  //     return this.stockService.createOrdonnance(createOrdonnanceDto);
+  //   } catch (error) {
+  //     throw new NotFoundException(error.message);
+  //   }
+  // }
 
   @Get('medicament/:id')
   async getMedicament(@Param('id') id: string) {
@@ -94,4 +94,21 @@ export class StockController {
   async deleteProduitAlimentaire(@Param('id') id: string) {
     return this.stockService.deleteProduitAlimentaire(id);
   }
+
+  // @Get('ordonnance/:id')
+  // async getOrdonnance(@Param('id') id: string) {
+  //   return this.stockService.getOrdonnanceById(id);
+  // }
+
+  // @Roles(Role.ADMIN)
+  // @Put('ordonnance/:id')
+  // async updateOrdonnance(@Param('id') id: string, @Body() createOrdonnanceDto: CreateOrdonnanceDto) {
+  //   return this.stockService.updateOrdonnance(id, createOrdonnanceDto);
+  // }
+
+  // @Roles(Role.ADMIN)
+  // @Delete('ordonnance/:id')
+  // async deleteOrdonnance(@Param('id') id: string) {
+  //   return this.stockService.deleteOrdonnance(id);
+  // }
 }

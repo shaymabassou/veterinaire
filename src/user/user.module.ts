@@ -9,6 +9,7 @@ import { Client, ClientSchema, User, UserSchema } from './user.entity';
 // import { Client, ClientSchema } from './client.entity';
 import { HistoriqueClient, HistoriqueClientSchema } from './historique-client.entity';
 import { AuthModule } from '../auth/auth.module';
+import { Animal, AnimalSchema } from 'src/animal/animal.entity';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { AuthModule } from '../auth/auth.module';
       { name: User.name, schema: UserSchema },
       { name: Client.name, schema: ClientSchema },
       { name: HistoriqueClient.name, schema: HistoriqueClientSchema },
+      { name: Animal.name, schema: AnimalSchema },
     ]),
     AuthModule,
   ],
