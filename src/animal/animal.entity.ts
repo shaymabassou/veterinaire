@@ -4,24 +4,31 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose, { Document } from 'mongoose';
 import { Sex } from './sex.enum';
+import { Espece } from './espece.enum';
+import { Race } from './race.enum';
 
 @Schema()
 export class Animal extends Document {
+  @Prop({ required: true })
+  numero_de_fiche: string;
 
   @Prop({ required: true })
-  race: string;
+  nom_prioritaire: string;
+
+  @Prop({ required: true, enum: Espece })
+  espece: Espece;
+
+  @Prop({ required: true, enum: Race })
+  race: Race;
 
   @Prop({ required: true })
   age: number;
-
-  @Prop({ required: true })
-  type: string;
 
   @Prop({ required: true, enum: Sex })
   sex: Sex;
 
   @Prop({ required: true })
-  identifier: string;
+  identification: string;
 
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Client', required: true })
   clientId: mongoose.Types.ObjectId; // Référence vers l'ID du client
