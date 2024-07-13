@@ -9,7 +9,7 @@ export class Stock extends Document {
   nom: string;
 
   @Prop()
-  description: string;
+  type: string;
 
   @Prop({ required: true })
   quantite: string;
