@@ -1,7 +1,17 @@
 /* eslint-disable prettier/prettier */
-import { SchemaFactory } from '@nestjs/mongoose';
+// produit-alimentaire.entity.ts
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Stock } from './stock.entity';
+import { ProduitAlimentaireType } from './produit-alimentaire-type.enum';
+import { ProduitAlimentaireNom } from './produit-alimentaire-nom.enum';
 
-export class ProduitAlimentaire extends Stock {}
+@Schema()
+export class ProduitAlimentaire extends Stock {
+  @Prop({ required: true, enum: ProduitAlimentaireType })
+  type: ProduitAlimentaireType;
+
+  @Prop({ required: true, enum: ProduitAlimentaireNom })
+  nom: ProduitAlimentaireNom;
+}
 
 export const ProduitAlimentaireSchema = SchemaFactory.createForClass(ProduitAlimentaire);
