@@ -44,8 +44,6 @@ export class StockService {
   async findAnimalById(animalId: string): Promise<Animal | null> {
     return this.animalModel.findById(animalId).exec();
   }
-  
-  
 
   async getMedicamentById(id: string): Promise<Medicament> {
     const medicament = await this.medicamentModel.findById(id).exec();
@@ -53,6 +51,9 @@ export class StockService {
       throw new NotFoundException(`Medicament with ID ${id} not found`);
     }
     return medicament;
+  }
+  async getAllMedicaments(): Promise<Medicament[]> {
+    return this.medicamentModel.find().exec();
   }
 
   async updateMedicament(id: string, createMedicamentDto: CreateMedicamentDto): Promise<Medicament> {

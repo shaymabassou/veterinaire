@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 // src/stock/stock.controller.ts
-import { Controller, Post, Body, UseGuards, Put, Param, Delete, Get } from '@nestjs/common';
+import { Controller, Post, Body, UseGuards, Put, Param, Delete, Get} from '@nestjs/common';
 import { StockService } from './stock.service';
 import { CreateMedicamentDto } from './dto/create-medicament.dto';
 import { CreateMaterielConsommableDto } from './dto/create-materiel-consommable.dto';
@@ -33,7 +33,7 @@ export class StockController {
     return this.stockService.createProduitAlimentaire(createProduitAlimentaireDto);
   }
 
-  
+   @Roles(Role.ADMIN)
   @Get('medicament/:id')
   async getMedicament(@Param('id') id: string) {
     return this.stockService.getMedicamentById(id);
@@ -44,6 +44,15 @@ export class StockController {
   async updateMedicament(@Param('id') id: string, @Body() createMedicamentDto: CreateMedicamentDto) {
     return this.stockService.updateMedicament(id, createMedicamentDto);
   }
+
+  @Get('medicaments')
+  @UseGuards(RolesGuard)
+  @Roles(Role.ADMIN)
+  async getAllMedicaments() {
+    return this.stockService.getAllMedicaments();
+  }
+
+
 
   @Roles(Role.ADMIN)
   @Delete('medicament/:id')

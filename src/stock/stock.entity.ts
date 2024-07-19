@@ -15,13 +15,16 @@ export class Stock extends Document {
   quantite: string;
 
   @Prop({ required: true })
-  prixAchat: number;
+  prixAchat: string;
 
   @Prop({ required: true })
   dateExpiration: Date;
 
   @Prop({ required: true })
-  prixVente: number;
+  prixVente: string;
+
+
+
 }
 
 export const StockSchema = SchemaFactory.createForClass(Stock);
