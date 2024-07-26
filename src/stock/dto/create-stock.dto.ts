@@ -18,8 +18,8 @@ export class CreateStockDto {
   @IsDateString()
   readonly dateExpiration: string;
 
-  @IsString()
-  readonly prixVente: number;
+  // @IsString()
+  // readonly prixVente: number;
 
  
 }

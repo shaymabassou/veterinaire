@@ -23,8 +23,6 @@ export class Stock extends Document {
   @Prop({ required: true })
   prixVente: string;
 
-
-
 }
 
 export const StockSchema = SchemaFactory.createForClass(Stock);

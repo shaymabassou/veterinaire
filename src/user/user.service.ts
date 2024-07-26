@@ -96,13 +96,7 @@ export class UserService implements OnModuleInit {
   }
 
   async createClient(createClientDto: CreateClientDto): Promise<Client> {
-    const { firstname, lastname, email, password, CIN, tel, adresse, dateNaissance, animalid } = createClientDto;
-
-    // Check if the animal with the given animalid exists in the database
-    const animalExists = await this.animalModel.findById(animalid).exec();
-    if (!animalExists) {
-      throw new NotFoundException(`Animal with ID ${animalid} not found`);
-    }
+    const { firstname, lastname, email, password, CIN, tel, adresse, dateNaissance } = createClientDto;
 
     // Vérifiez si l'utilisateur existe déjà
     const existingUser = await this.userModel.findOne({ email }).exec();
@@ -120,11 +114,22 @@ export class UserService implements OnModuleInit {
       CIN, 
       tel, 
       adresse, 
-      dateNaissance, 
-      animalid 
+      dateNaissance 
     });
-    return newClient.save();
+    const savedClient = await newClient.save();
+    console.log('Saved Client:', savedClient);  // Log for debugging
+    return savedClient;
   }
+
+
+  // async addAnimalToClient(clientId: string, animalId: string): Promise<void> {
+  //   const client = await this.clientModel.findById(clientId).exec();
+  //   if (!client) {
+  //     throw new NotFoundException(`Client with ID ${clientId} not found`);
+  //   }
+  //   client.animalid = animalId; // Assurez-vous que ce champ existe dans le modèle Client
+  //   await client.save();
+  // }
 
   async updateClient(clientId: string, updateClientDto: UpdateClientDto): Promise<{ message: string }> {
     const client = await this.findClientById(clientId);
@@ -147,6 +152,11 @@ export class UserService implements OnModuleInit {
   async getClientById(clientId: string): Promise<Client> {
     return this.findClientById(clientId);
   }
+
+  async getAllClients(): Promise<Client[]> {
+    return this.clientModel.find().exec();
+  }
+
 
   async getClientByAnimalId(animalId: string): Promise<Client> {
     return this.findClientByAnimalId(animalId);

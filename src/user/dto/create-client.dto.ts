@@ -35,7 +35,7 @@ export class CreateClientDto {
   @IsDate()
   dateNaissance: Date;
 
-  @IsNotEmpty()
-  @IsString()
-  animalid: string;
+  // @IsNotEmpty()
+  // @IsString()
+  // animalid: string;
 }

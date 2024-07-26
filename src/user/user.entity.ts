@@ -49,8 +49,8 @@ export class Client extends User {
   @Prop({ required: true })
   dateNaissance: Date;
 
-  @Prop({ required: true })
-  animalid: string;
+  // @Prop({ required: true })
+  // animalid: string;
 
   @Prop({
     default: 'client',

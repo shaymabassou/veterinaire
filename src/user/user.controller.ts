@@ -34,7 +34,7 @@ export class UserController {
 
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(Role.ADMIN)
-  @Post('clients')
+  @Post('client')
   async createClient(@Body() createClientDto: CreateClientDto) {
     return this.userService.createClient(createClientDto);
   }
@@ -59,7 +59,12 @@ export class UserController {
   async getClientById(@Param('id') clientId: string) {
     return this.userService.getClientById(clientId);
   }
-  
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(Role.ADMIN)
+  @Get('clients')
+  async getAllClients() {
+    return this.userService.getAllClients();
+  }
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(Role.ADMIN)
   @Get('clients/animal/:animalId')

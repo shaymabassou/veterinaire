@@ -45,11 +45,26 @@ export class StockController {
     return this.stockService.updateMedicament(id, createMedicamentDto);
   }
 
+  @Get('materiel-consommable')
+  @UseGuards(RolesGuard)
+  @Roles(Role.ADMIN)
+  async getAllMaterielConsommable() {
+    return this.stockService.getAllMaterielConsommable();
+  }
+
   @Get('medicaments')
   @UseGuards(RolesGuard)
   @Roles(Role.ADMIN)
   async getAllMedicaments() {
     return this.stockService.getAllMedicaments();
+  }
+
+
+  @Get('produit-alimentaires')
+  @UseGuards(RolesGuard)
+  @Roles(Role.ADMIN)
+  async getAllProduitAlimentaires() {
+    return this.stockService.getAllProduitAlimentaires();
   }
 
 

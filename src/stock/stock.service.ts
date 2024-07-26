@@ -1,5 +1,6 @@
 /* eslint-disable prettier/prettier */
-// src/stock/stock.service.ts
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable prettier/prettier */
 import { Injectable, Inject, forwardRef, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
@@ -22,19 +23,45 @@ export class StockService {
     @Inject(forwardRef(() => UserService)) private userService: UserService,
   ) {}
 
+  private calculatePrixVente(prixAchat: number, margin: number = 1.2): number {
+    return prixAchat * margin;
+  }
+
   async createMedicament(createMedicamentDto: CreateMedicamentDto): Promise<Medicament> {
-    const newMedicament = new this.medicamentModel(createMedicamentDto);
+    const { prixAchat } = createMedicamentDto;
+    const prixVente = this.calculatePrixVente(Number(prixAchat));
+
+    const newMedicament = new this.medicamentModel({
+      ...createMedicamentDto,
+      prixVente,
+    });
     return newMedicament.save();
   }
 
   async createMaterielConsommable(createMaterielConsommableDto: CreateMaterielConsommableDto): Promise<MaterielConsommable> {
-    const newMaterielConsommable = new this.materielConsommableModel(createMaterielConsommableDto);
+    const { prixAchat } = createMaterielConsommableDto;
+    const prixVente = this.calculatePrixVente(Number(prixAchat));
+
+    const newMaterielConsommable = new this.materielConsommableModel({
+      ...createMaterielConsommableDto,
+      prixVente,
+    });
     return newMaterielConsommable.save();
   }
 
   async createProduitAlimentaire(createProduitAlimentaireDto: CreateProduitAlimentaireDto): Promise<ProduitAlimentaire> {
-    const newProduitAlimentaire = new this.produitAlimentaireModel(createProduitAlimentaireDto);
+    const { prixAchat } = createProduitAlimentaireDto;
+    const prixVente = this.calculatePrixVente(Number(prixAchat));
+
+    const newProduitAlimentaire = new this.produitAlimentaireModel({
+      ...createProduitAlimentaireDto,
+      prixVente,
+    });
     return newProduitAlimentaire.save();
+  }
+
+  async findMaterielConsommableById(materielconsommableId: string): Promise< MaterielConsommable| null> {
+    return this.materielConsommableModel.findById(materielconsommableId).exec();
   }
 
   async findMedicamentById(medicamentId: string): Promise<Medicament | null> {
@@ -52,12 +79,22 @@ export class StockService {
     }
     return medicament;
   }
+
   async getAllMedicaments(): Promise<Medicament[]> {
     return this.medicamentModel.find().exec();
   }
 
   async updateMedicament(id: string, createMedicamentDto: CreateMedicamentDto): Promise<Medicament> {
-    const medicament = await this.medicamentModel.findByIdAndUpdate(id, createMedicamentDto, { new: true }).exec();
+    const { prixAchat } = createMedicamentDto;
+
+    let prixVente: number | undefined;
+    if (prixAchat !== undefined) {
+      prixVente = this.calculatePrixVente(Number(prixAchat));
+    }
+
+    const updateData = { ...createMedicamentDto, prixVente };
+
+    const medicament = await this.medicamentModel.findByIdAndUpdate(id, updateData, { new: true }).exec();
     if (!medicament) {
       throw new NotFoundException(`Medicament with ID ${id} not found`);
     }
@@ -80,8 +117,21 @@ export class StockService {
     return materielConsommable;
   }
 
+  async getAllMaterielConsommable(): Promise<MaterielConsommable[]> {
+    return this.materielConsommableModel.find().exec();
+  }
+
   async updateMaterielConsommable(id: string, createMaterielConsommableDto: CreateMaterielConsommableDto): Promise<MaterielConsommable> {
-    const materielConsommable = await this.materielConsommableModel.findByIdAndUpdate(id, createMaterielConsommableDto, { new: true }).exec();
+    const { prixAchat } = createMaterielConsommableDto;
+
+    let prixVente: number | undefined;
+    if (prixAchat !== undefined) {
+      prixVente = this.calculatePrixVente(Number(prixAchat));
+    }
+
+    const updateData = { ...createMaterielConsommableDto, prixVente };
+
+    const materielConsommable = await this.materielConsommableModel.findByIdAndUpdate(id, updateData, { new: true }).exec();
     if (!materielConsommable) {
       throw new NotFoundException(`MaterielConsommable with ID ${id} not found`);
     }
@@ -104,8 +154,21 @@ export class StockService {
     return produitAlimentaire;
   }
 
+  async getAllProduitAlimentaires(): Promise<ProduitAlimentaire[]> {
+    return this.produitAlimentaireModel.find().exec();
+  }
+
   async updateProduitAlimentaire(id: string, createProduitAlimentaireDto: CreateProduitAlimentaireDto): Promise<ProduitAlimentaire> {
-    const produitAlimentaire = await this.produitAlimentaireModel.findByIdAndUpdate(id, createProduitAlimentaireDto, { new: true }).exec();
+    const { prixAchat } = createProduitAlimentaireDto;
+
+    let prixVente: number | undefined;
+    if (prixAchat !== undefined) {
+      prixVente = this.calculatePrixVente(Number(prixAchat));
+    }
+
+    const updateData = { ...createProduitAlimentaireDto, prixVente };
+
+    const produitAlimentaire = await this.produitAlimentaireModel.findByIdAndUpdate(id, updateData, { new: true }).exec();
     if (!produitAlimentaire) {
       throw new NotFoundException(`ProduitAlimentaire with ID ${id} not found`);
     }

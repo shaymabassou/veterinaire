@@ -19,15 +19,17 @@ export class AnimalService {
   ) {}
 
   async createAnimal(createAnimalDto: CreateAnimalDto): Promise<Animal> {
-    // Vérifier si le clientId existe dans la base de données
     const client = await this.clientModel.findById(createAnimalDto.clientId).exec();
     if (!client) {
       throw new NotFoundException(`Client with ID ${createAnimalDto.clientId} not found`);
     }
-
+  
     const newAnimal = new this.animalModel(createAnimalDto);
-    return newAnimal.save();
+    const savedAnimal = await newAnimal.save();
+    console.log('Saved Animal:', savedAnimal);  // Log for debugging
+    return savedAnimal;
   }
+  
 
   async updateAnimal(animalId: string, updateAnimalDto: UpdateAnimalDto): Promise<{ message: string }> {
     const animal = await this.animalModel.findById(animalId).exec();
@@ -48,7 +50,7 @@ export class AnimalService {
   }
 
   async getAnimal(animalId: string): Promise<Animal> {
-    const animal = await this.animalModel.findById(animalId).exec();
+    const animal = await this.animalModel.findById(animalId).populate('clientId').exec();
     if (!animal) {
       throw new NotFoundException(`Animal with ID ${animalId} not found`);
     }

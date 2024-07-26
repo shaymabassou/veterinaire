@@ -2,8 +2,8 @@
 /* create-animal.dto.ts */
 import { IsEnum, IsNotEmpty, IsString, IsNumber } from 'class-validator';
 import { Sex } from '../sex.enum';
-import { Espece } from '../espece.enum';
-import { Race } from '../race.enum';
+// import { Espece } from '../espece.enum';
+// import { Race } from '../race.enum';
 
 export class CreateAnimalDto {
   @IsString()
@@ -14,13 +14,13 @@ export class CreateAnimalDto {
   @IsNotEmpty()
   nom_prioritaire: string;
 
-  @IsEnum(Espece)
+  @IsString()
   @IsNotEmpty()
-  espece: Espece;
+  espece: string;
 
-  @IsEnum(Race)
+  @IsString()
   @IsNotEmpty()
-  race: Race;
+  race: string;
 
   @IsNumber()
   @IsNotEmpty()
