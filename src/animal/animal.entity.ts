@@ -4,8 +4,8 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose, { Document } from 'mongoose';
 import { Sex } from './sex.enum';
-import { Espece } from './espece.enum';
-import { Race } from './race.enum';
+// import { Espece } from './espece.enum';
+// import { Race } from './race.enum';
 
 @Schema()
 export class Animal extends Document {
@@ -15,11 +15,11 @@ export class Animal extends Document {
   @Prop({ required: true })
   nom_prioritaire: string;
 
-  @Prop({ required: true, enum: Espece })
-  espece: Espece;
+  @Prop({ required: true })
+  espece: string;
 
-  @Prop({ required: true, enum: Race })
-  race: Race;
+  @Prop({ required: true })
+  race: string;
 
   @Prop({ required: true })
   age: number;

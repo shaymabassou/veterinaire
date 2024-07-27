@@ -96,7 +96,7 @@ export class UserService implements OnModuleInit {
   }
 
   async createClient(createClientDto: CreateClientDto): Promise<Client> {
-    const { firstname, lastname, email, password, CIN, tel, adresse, dateNaissance } = createClientDto;
+    const { firstname, lastname, email,CIN, tel, adresse, dateNaissance } = createClientDto;
 
     // Vérifiez si l'utilisateur existe déjà
     const existingUser = await this.userModel.findOne({ email }).exec();
@@ -104,12 +104,11 @@ export class UserService implements OnModuleInit {
       throw new Error('Email already exists');
     }
 
-    const hashedPassword = await bcrypt.hash(password, 10);
+    
     const newClient = new this.clientModel({ 
       firstname, 
       lastname, 
       email, 
-      password: hashedPassword, 
       role: 'client', 
       CIN, 
       tel, 
@@ -120,16 +119,6 @@ export class UserService implements OnModuleInit {
     console.log('Saved Client:', savedClient);  // Log for debugging
     return savedClient;
   }
-
-
-  // async addAnimalToClient(clientId: string, animalId: string): Promise<void> {
-  //   const client = await this.clientModel.findById(clientId).exec();
-  //   if (!client) {
-  //     throw new NotFoundException(`Client with ID ${clientId} not found`);
-  //   }
-  //   client.animalid = animalId; // Assurez-vous que ce champ existe dans le modèle Client
-  //   await client.save();
-  // }
 
   async updateClient(clientId: string, updateClientDto: UpdateClientDto): Promise<{ message: string }> {
     const client = await this.findClientById(clientId);

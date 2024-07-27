@@ -2,8 +2,8 @@
 /* update-animal.dto.ts */
 import { IsEnum, IsString, IsNumber, IsOptional } from 'class-validator';
 import { Sex } from '../sex.enum';
-import { Espece } from '../espece.enum';
-import { Race } from '../race.enum';
+// import { Espece } from '../espece.enum';
+// import { Race } from '../race.enum';
 
 export class UpdateAnimalDto {
   @IsString()
@@ -14,13 +14,13 @@ export class UpdateAnimalDto {
   @IsOptional()
   nom_prioritaire?: string;
 
-  @IsEnum(Espece)
+  @IsString()
   @IsOptional()
-  espece?: Espece;
+  espece?: string;
 
-  @IsEnum(Race)
+  @IsString()
   @IsOptional()
-  race?: Race;
+  race?: string;
 
   @IsNumber()
   @IsOptional()
