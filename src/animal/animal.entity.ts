@@ -2,8 +2,9 @@
 /* animal.entity.ts */
 
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import mongoose, { Document } from 'mongoose';
+import { Document,  Types } from 'mongoose';
 import { Sex } from './sex.enum';
+import { Client } from 'src/user/user.entity';
 // import { Espece } from './espece.enum';
 // import { Race } from './race.enum';
 
@@ -13,7 +14,7 @@ export class Animal extends Document {
   numero_de_fiche: string;
 
   @Prop({ required: true })
-  nom_prioritaire: string;
+  nom: string;
 
   @Prop({ required: true })
   espece: string;
@@ -24,16 +25,17 @@ export class Animal extends Document {
   @Prop({ required: true })
   age: number;
 
-  @Prop({ required: true, enum: Sex })
+  @Prop({ required: true, enum: Object.values(Sex) })
   sex: Sex;
 
   @Prop({ required: true })
   identification: string;
 
-  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Client', required: true })
-  clientId: mongoose.Types.ObjectId; // Référence vers l'ID du client
+  @Prop({ type: Types.ObjectId, ref: Client.name, required: true })
+  clientId: Types.ObjectId;
+}
 
   // D'autres champs et méthodes peuvent être ajoutés selon vos besoins
-}
+
 
 export const AnimalSchema = SchemaFactory.createForClass(Animal);

@@ -1,7 +1,6 @@
 /* eslint-disable prettier/prettier */
-import { IsDateString, IsString } from "class-validator";
+import { IsDateString, IsString, IsNumber } from "class-validator";
 
-/* eslint-disable prettier/prettier */
 export class CreateStockDto {
   @IsString()
   readonly nom: string;
@@ -9,17 +8,18 @@ export class CreateStockDto {
   @IsString()
   readonly type: string;
 
-  @IsString()
-  readonly quantite: string;
+  @IsNumber({}, { message: 'Quantité doit être un nombre entier' })
+  readonly quantite: number; // Utilisez number ici
 
-  @IsString()
-  readonly prixAchat: string;
+  @IsNumber({}, { message: 'Prix d\'achat doit être un nombre décimal' })
+  readonly prixAchat: number;
+
+  @IsNumber({}, { message: 'Prix de vente doit être un nombre décimal' })
+  readonly prixVente: number;
 
   @IsDateString()
   readonly dateExpiration: string;
 
-  // @IsString()
-  // readonly prixVente: number;
-
- 
+  @IsNumber({}, { message: 'Marge doit être un nombre décimal' })
+  readonly margin: number;
 }

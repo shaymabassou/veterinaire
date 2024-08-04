@@ -103,4 +103,12 @@ export class UserController {
   async getHistorique(@Param('id') clientId: string) {
     return this.userService.getClientById(clientId);
   }
+
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(Role.ADMIN)
+  @Get('clients/:id/with-animals')
+  async getClientWithAnimals(@Param('id') clientId: string) {
+    return this.userService.getClientWithAnimals(clientId);
+  }
+  
 }

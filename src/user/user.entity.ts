@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
+import { Document, Schema as MongooseSchema } from 'mongoose';
 // import { HistoriqueClient, HistoriqueClientSchema } from './historique-client.entity';
 
 @Schema({ 
@@ -37,20 +37,14 @@ export const UserSchema = SchemaFactory.createForClass(User);
 @Schema({ timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' } })
 export class Client extends User {
 
-  @Prop({ required: true, unique: true })
-  CIN: string;
-
   @Prop({ required: true })
-  tel: string;
+  tel: number;
 
   @Prop({ required: true })
   adresse: string;
 
-  @Prop({ required: true })
-  dateNaissance: Date;
-
-  // @Prop({ required: true })
-  // animalid: string;
+  @Prop([{ type: MongooseSchema.Types.ObjectId, ref: 'Animal' }])
+  animals: MongooseSchema.Types.ObjectId[];
 
   @Prop({
     default: 'client',

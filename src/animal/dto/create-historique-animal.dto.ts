@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { IsDate, IsString } from 'class-validator';
+import { IsDate, IsNotEmpty, IsString } from 'class-validator';
 
 export class CreateHistoriqueAnimalDto {
   @IsDate()
@@ -7,4 +7,8 @@ export class CreateHistoriqueAnimalDto {
 
   @IsString()
   description: string;
+
+  @IsString()
+  @IsNotEmpty()
+  animalId: string;
 }

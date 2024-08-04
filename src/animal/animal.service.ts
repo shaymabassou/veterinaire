@@ -29,7 +29,6 @@ export class AnimalService {
     console.log('Saved Animal:', savedAnimal);  // Log for debugging
     return savedAnimal;
   }
-  
 
   async updateAnimal(animalId: string, updateAnimalDto: UpdateAnimalDto): Promise<{ message: string }> {
     const animal = await this.animalModel.findById(animalId).exec();
@@ -58,11 +57,11 @@ export class AnimalService {
   }
 
   async getAllAnimals(): Promise<Animal[]> {
-    return this.animalModel.find().exec();
+    return this.animalModel.find().populate('clientId').exec();
   }
 
   async getAnimalsByClientId(clientId: string): Promise<Animal[]> {
-    return this.animalModel.find({ clientId }).exec();
+    return this.animalModel.find({ clientId }).populate('clientId').exec();
   }
   
   async addHistorique(animalId: string, createHistoriqueAnimalDto: CreateHistoriqueAnimalDto): Promise<HistoriqueAnimal> {

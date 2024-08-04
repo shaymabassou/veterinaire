@@ -1,6 +1,8 @@
 /* eslint-disable prettier/prettier */
 // create-client.dto.ts
-import { IsNotEmpty, IsString, IsEmail, IsDate } from 'class-validator';
+import { IsNotEmpty, IsString, IsEmail,IsArray, IsNumber } from 'class-validator';
+import { Animal } from 'src/animal/animal.entity';
+
 
 export class CreateClientDto {
   @IsNotEmpty()
@@ -20,22 +22,14 @@ export class CreateClientDto {
   password?: string;
 
   @IsNotEmpty()
-  @IsString()
-  CIN: string;
-
-  @IsNotEmpty()
-  @IsString()
-  tel: string;
+  @IsNumber()
+  tel: number;
 
   @IsNotEmpty()
   @IsString()
   adresse: string;
 
+  @IsArray()
   @IsNotEmpty()
-  @IsDate()
-  dateNaissance: Date;
-
-  // @IsNotEmpty()
-  // @IsString()
-  // animalid: string;
+  animals: Animal[];
 }

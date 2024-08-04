@@ -23,13 +23,13 @@ export class StockService {
     @Inject(forwardRef(() => UserService)) private userService: UserService,
   ) {}
 
-  private calculatePrixVente(prixAchat: number, margin: number = 1.2): number {
-    return prixAchat * margin;
+  private calculatePrixVente(prixAchat: number, margin: number): number {
+    return Math.round(prixAchat * margin);
   }
 
   async createMedicament(createMedicamentDto: CreateMedicamentDto): Promise<Medicament> {
-    const { prixAchat } = createMedicamentDto;
-    const prixVente = this.calculatePrixVente(Number(prixAchat));
+    const { prixAchat, margin } = createMedicamentDto;
+    const prixVente = this.calculatePrixVente(Number(prixAchat), margin);
 
     const newMedicament = new this.medicamentModel({
       ...createMedicamentDto,
@@ -39,8 +39,8 @@ export class StockService {
   }
 
   async createMaterielConsommable(createMaterielConsommableDto: CreateMaterielConsommableDto): Promise<MaterielConsommable> {
-    const { prixAchat } = createMaterielConsommableDto;
-    const prixVente = this.calculatePrixVente(Number(prixAchat));
+    const { prixAchat, margin } = createMaterielConsommableDto;
+    const prixVente = this.calculatePrixVente(Number(prixAchat), margin);
 
     const newMaterielConsommable = new this.materielConsommableModel({
       ...createMaterielConsommableDto,
@@ -50,8 +50,8 @@ export class StockService {
   }
 
   async createProduitAlimentaire(createProduitAlimentaireDto: CreateProduitAlimentaireDto): Promise<ProduitAlimentaire> {
-    const { prixAchat } = createProduitAlimentaireDto;
-    const prixVente = this.calculatePrixVente(Number(prixAchat));
+    const { prixAchat, margin } = createProduitAlimentaireDto;
+    const prixVente = this.calculatePrixVente(Number(prixAchat), margin);
 
     const newProduitAlimentaire = new this.produitAlimentaireModel({
       ...createProduitAlimentaireDto,
@@ -85,11 +85,11 @@ export class StockService {
   }
 
   async updateMedicament(id: string, createMedicamentDto: CreateMedicamentDto): Promise<Medicament> {
-    const { prixAchat } = createMedicamentDto;
+    const { prixAchat, margin } = createMedicamentDto;
 
     let prixVente: number | undefined;
-    if (prixAchat !== undefined) {
-      prixVente = this.calculatePrixVente(Number(prixAchat));
+    if (prixAchat !== undefined && margin !== undefined) {
+      prixVente = this.calculatePrixVente(Number(prixAchat), margin);
     }
 
     const updateData = { ...createMedicamentDto, prixVente };
@@ -122,11 +122,11 @@ export class StockService {
   }
 
   async updateMaterielConsommable(id: string, createMaterielConsommableDto: CreateMaterielConsommableDto): Promise<MaterielConsommable> {
-    const { prixAchat } = createMaterielConsommableDto;
+    const { prixAchat, margin } = createMaterielConsommableDto;
 
     let prixVente: number | undefined;
-    if (prixAchat !== undefined) {
-      prixVente = this.calculatePrixVente(Number(prixAchat));
+    if (prixAchat !== undefined && margin !== undefined) {
+      prixVente = this.calculatePrixVente(Number(prixAchat), margin);
     }
 
     const updateData = { ...createMaterielConsommableDto, prixVente };
@@ -159,11 +159,11 @@ export class StockService {
   }
 
   async updateProduitAlimentaire(id: string, createProduitAlimentaireDto: CreateProduitAlimentaireDto): Promise<ProduitAlimentaire> {
-    const { prixAchat } = createProduitAlimentaireDto;
+    const { prixAchat, margin } = createProduitAlimentaireDto;
 
     let prixVente: number | undefined;
-    if (prixAchat !== undefined) {
-      prixVente = this.calculatePrixVente(Number(prixAchat));
+    if (prixAchat !== undefined && margin !== undefined) {
+      prixVente = this.calculatePrixVente(Number(prixAchat), margin);
     }
 
     const updateData = { ...createProduitAlimentaireDto, prixVente };

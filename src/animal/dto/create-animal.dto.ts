@@ -12,7 +12,7 @@ export class CreateAnimalDto {
 
   @IsString()
   @IsNotEmpty()
-  nom_prioritaire: string;
+  nom: string;
 
   @IsString()
   @IsNotEmpty()

@@ -20,6 +20,11 @@ export class OrdonnanceController {
     }
   }
 
+  @Get()
+  async getAllOrdonnances() {
+    return await this.ordonnanceService.getAllOrdonnances();
+  }
+
   @Get(':id')
   async getOrdonnance(@Param('id') id: string) {
     return await this.ordonnanceService.getOrdonnanceById(id);

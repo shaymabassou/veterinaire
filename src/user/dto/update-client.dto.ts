@@ -1,15 +1,15 @@
 /* eslint-disable prettier/prettier */
 // src/user/dto/update-client.dto.ts
-import { IsNotEmpty, IsString, IsDateString } from 'class-validator';
+import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
 
 export class UpdateClientDto {
-  @IsNotEmpty()
-  @IsString()
-  readonly CIN: string;
+  // @IsNotEmpty()
+  // @IsString()
+  // readonly CIN: string;
 
   @IsNotEmpty()
-  @IsString()
-  readonly tel: string;
+  @IsNumber()
+  readonly tel: number;
 
   @IsNotEmpty()
   @IsString()
@@ -19,9 +19,9 @@ export class UpdateClientDto {
   @IsString()
   readonly email: string;
 
-  @IsNotEmpty()
-  @IsDateString()
-  readonly dateNaissance: Date;
+  // @IsNotEmpty()
+  // @IsDateString()
+  // readonly dateNaissance: Date;
 
   @IsNotEmpty()
   @IsString()

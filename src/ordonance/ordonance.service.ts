@@ -5,31 +5,29 @@ import { Model } from 'mongoose';
 import { CreateOrdonnanceDto } from './dto/create-ordonnance.dto';
 import { Ordonnance } from './ordonnance.entity';
 import { Animal } from '../animal/animal.entity';
-import { Medicament } from 'src/stock/medicament.entity';
+// import { Medicament } from 'src/stock/medicament.entity';
 
 @Injectable()
 export class OrdonnanceService {
   constructor(
     @InjectModel(Ordonnance.name) private readonly ordonnanceModel: Model<Ordonnance>,
-    @InjectModel(Medicament.name) private readonly medicamentModel: Model<Medicament>,
+    // @InjectModel(Medicament.name) private readonly medicamentModel: Model<Medicament>,
     @InjectModel(Animal.name) private readonly animalModel: Model<Animal>,
   ) {}
 
   async createOrdonnance(createOrdonnanceDto: CreateOrdonnanceDto): Promise<Ordonnance> {
-    const medicament = await this.medicamentModel.findById(createOrdonnanceDto.medicamentId).exec();
-    if (!medicament) {
-      throw new NotFoundException('Medicament not found');
-    }
-
-    const animal = await this.animalModel.findById(createOrdonnanceDto.animalId).exec();
+    const { nom, type, dosage, nombreDeFoisParJour, animalId } = createOrdonnanceDto;
+    const animal = await this.animalModel.findById(animalId).exec();
     if (!animal) {
       throw new NotFoundException('Animal not found');
     }
 
+    // Create new ordonnance
     const nouvelleOrdonnance = new this.ordonnanceModel({
-      dosage: createOrdonnanceDto.dosage,
-      nombreDeFoisParJour: createOrdonnanceDto.nombreDeFoisParJour,
-      medicament: medicament._id,
+      dosage,
+      nombreDeFoisParJour,
+      nom,
+      type,
       animalId: animal._id,
     });
 
@@ -59,4 +57,10 @@ export class OrdonnanceService {
     }
     return { message: 'Ordonnance deleted successfully' };
   }
+  
+  async getAllOrdonnances(): Promise<Ordonnance[]> {
+    return this.ordonnanceModel.find().exec();
+  }
 }
+
+
