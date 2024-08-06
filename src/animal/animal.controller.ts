@@ -53,11 +53,21 @@ export class AnimalController {
   async addHistorique(@Param('id') animalId: string, @Body() createHistoriqueAnimalDto: CreateHistoriqueAnimalDto) {
     return this.animalService.addHistorique(animalId, createHistoriqueAnimalDto);
   }
-
+  @Roles(Role.ADMIN)
   @Get(':animalId/historique/:historiqueId')
-  async getHistoriqueById(@Param('animalId') animalId: string, @Param('historiqueId') historiqueId: string) {
-    return this.animalService.getHistoriqueById(historiqueId);
+  async getHistoriqueById(
+    @Param('animalId') animalId: string,
+    @Param('historiqueId') historiqueId: string
+  ) {
+    return this.animalService.getHistoriqueById(historiqueId, animalId);
   }
+
+  @Get(':id/historiques')
+async getHistoriquesByAnimalId(@Param('id') animalId: string) {
+  return this.animalService.getHistoriquesByAnimalId(animalId);
+}
+
+  
 
   @Roles(Role.ADMIN)
   @Put(':animalId/historique/:historiqueId')

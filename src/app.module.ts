@@ -7,6 +7,9 @@ import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { AnimalModule } from './animal/animal.module';
 import { OrdonnanceModule } from './ordonance/ordonance.module';
+// import { FacturationService } from './facturation/facturation.service';
+// import { FacturationController } from './facturation/facturation.controller';
+import { FacturationModule } from './facturation/facturation.module';
 
 
 @Module({
@@ -17,8 +20,9 @@ import { OrdonnanceModule } from './ordonance/ordonance.module';
     StockModule,
     AnimalModule,
     OrdonnanceModule,
+    FacturationModule,
   ],
-  providers: [],
-  controllers: [],
+  // providers: [FacturationService],
+  // controllers: [FacturationController],
 })
 export class AppModule {}

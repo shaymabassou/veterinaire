@@ -6,7 +6,6 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { UserService } from './user.service';
 import { UserController } from './user.controller';
 import { Client, ClientSchema, User, UserSchema } from './user.entity';
-// import { Client, ClientSchema } from './client.entity';
 import { HistoriqueClient, HistoriqueClientSchema } from './historique-client.entity';
 import { AuthModule } from '../auth/auth.module';
 import { Animal, AnimalSchema } from 'src/animal/animal.entity';

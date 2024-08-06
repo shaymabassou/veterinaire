@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 /* create-animal.dto.ts */
-import { IsEnum, IsNotEmpty, IsString, IsNumber } from 'class-validator';
+import { IsEnum, IsNotEmpty, IsString } from 'class-validator';
 import { Sex } from '../sex.enum';
 // import { Espece } from '../espece.enum';
 // import { Race } from '../race.enum';
@@ -22,9 +22,9 @@ export class CreateAnimalDto {
   @IsNotEmpty()
   race: string;
 
-  @IsNumber()
+  @IsString()
   @IsNotEmpty()
-  age: number;
+  age: string;
 
   @IsEnum(Sex)
   @IsNotEmpty()

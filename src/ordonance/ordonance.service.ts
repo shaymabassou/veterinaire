@@ -11,7 +11,6 @@ import { Animal } from '../animal/animal.entity';
 export class OrdonnanceService {
   constructor(
     @InjectModel(Ordonnance.name) private readonly ordonnanceModel: Model<Ordonnance>,
-    // @InjectModel(Medicament.name) private readonly medicamentModel: Model<Medicament>,
     @InjectModel(Animal.name) private readonly animalModel: Model<Animal>,
   ) {}
 
@@ -35,7 +34,7 @@ export class OrdonnanceService {
   }
 
   async getOrdonnanceById(id: string): Promise<Ordonnance> {
-    const ordonnance = await this.ordonnanceModel.findById(id).exec();
+    const ordonnance = await this.ordonnanceModel.findById(id).populate('animalId').exec();
     if (!ordonnance) {
       throw new NotFoundException(`Ordonnance with ID ${id} not found`);
     }
@@ -59,7 +58,15 @@ export class OrdonnanceService {
   }
   
   async getAllOrdonnances(): Promise<Ordonnance[]> {
-    return this.ordonnanceModel.find().exec();
+    return this.ordonnanceModel.find().populate('animalId').exec();
+  }
+
+  async findById(id: string): Promise<Ordonnance> {
+    const ordonnance = await this.ordonnanceModel.findById(id).exec();
+    if (!ordonnance) {
+      throw new NotFoundException(`Ordonnance with ID ${id} not found`);
+    }
+    return ordonnance;
   }
 }
 

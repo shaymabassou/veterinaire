@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 /* update-animal.dto.ts */
-import { IsEnum, IsString, IsNumber, IsOptional } from 'class-validator';
+import { IsEnum, IsString, IsOptional } from 'class-validator';
 import { Sex } from '../sex.enum';
 // import { Espece } from '../espece.enum';
 // import { Race } from '../race.enum';
@@ -12,7 +12,7 @@ export class UpdateAnimalDto {
 
   @IsString()
   @IsOptional()
-  nom_prioritaire?: string;
+  nom?: string;
 
   @IsString()
   @IsOptional()
@@ -22,9 +22,9 @@ export class UpdateAnimalDto {
   @IsOptional()
   race?: string;
 
-  @IsNumber()
+  @IsString()
   @IsOptional()
-  age?: number;
+  age?: string;
 
   @IsEnum(Sex)
   @IsOptional()

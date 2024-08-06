@@ -19,12 +19,13 @@ export class OrdonnanceController {
       throw new NotFoundException(error.message);
     }
   }
-
+  @Roles(Role.ADMIN)
   @Get()
   async getAllOrdonnances() {
     return await this.ordonnanceService.getAllOrdonnances();
   }
 
+  @Roles(Role.ADMIN)
   @Get(':id')
   async getOrdonnance(@Param('id') id: string) {
     return await this.ordonnanceService.getOrdonnanceById(id);

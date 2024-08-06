@@ -23,7 +23,7 @@ export class Animal extends Document {
   race: string;
 
   @Prop({ required: true })
-  age: number;
+  age: string;
 
   @Prop({ required: true, enum: Object.values(Sex) })
   sex: Sex;

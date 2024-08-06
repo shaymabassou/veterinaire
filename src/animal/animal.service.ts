@@ -80,12 +80,12 @@ export class AnimalService {
     return historiqueAnimal;
   }
 
-  async getHistoriqueById(historiqueId: string): Promise<HistoriqueAnimal> {
-    const historiqueAnimal = await this.historiqueAnimalModel.findById(historiqueId).exec();
-    if (!historiqueAnimal) {
-      throw new NotFoundException(`Historique with ID ${historiqueId} not found`);
-    }
-    return historiqueAnimal;
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  async getHistoriqueById(historiqueId: string, animalId: string): Promise<HistoriqueAnimal> {
+    return this.historiqueAnimalModel.findOne({ _id: historiqueId, animalId });
+  }
+  async getHistoriquesByAnimalId(animalId: string): Promise<HistoriqueAnimal[]> {
+    return this.historiqueAnimalModel.find({ animalId }).exec();
   }
 
   async updateHistorique(historiqueId: string, updateHistoriqueAnimalDto: UpdateHistoriqueAnimalDto): Promise<{ message: string }> {
