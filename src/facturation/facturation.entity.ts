@@ -13,15 +13,33 @@ prixConsultation: number;
 @Prop({  type: Number })
 prixGlobale: number;
 
-@Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Medicament', required: true })
-medicamentId: mongoose.Types.ObjectId;
+@Prop({  type: String })
+nom_medecin: string;
 
-@Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'ProduitAlimentaire', required: true })
-produitalimentaireId: mongoose.Types.ObjectId;
+@Prop({ required: true })
+date: Date;
+
+@Prop({  type: String })
+adresse_medecin: string;
+
+@Prop({  type: Number })
+facture_n: number;
+
+@Prop({  type: Number })
+tel: number;
+
+@Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Client', required: true })
+clientId: mongoose.Types.ObjectId;
+
+@Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Medicament' })
+medicamentId?: mongoose.Types.ObjectId;
+
+@Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'ProduitAlimentaire' })
+produitalimentaireId?: mongoose.Types.ObjectId;
 
 
-@Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'MaterielConsommable', required: true })
-materielconsommableId: mongoose.Types.ObjectId;
+@Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'MaterielConsommable' })
+materielconsommableId?: mongoose.Types.ObjectId;
 }
 
 export const FacturationSchema = SchemaFactory.createForClass(Facturation);

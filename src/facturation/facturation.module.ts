@@ -8,6 +8,7 @@ import { ProduitAlimentaire, ProduitAlimentaireSchema } from 'src/stock/produit-
 import { Medicament, MedicamentSchema } from 'src/stock/medicament.entity';
 import { MaterielConsommable, MaterielConsommableSchema } from 'src/stock/materiel-consommable.entity';
 import { UserModule } from 'src/user/user.module';
+import { Client, ClientSchema } from 'src/user/user.entity';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { UserModule } from 'src/user/user.module';
     MongooseModule.forFeature([{ name: Medicament.name, schema: MedicamentSchema }]),
     MongooseModule.forFeature([{ name: ProduitAlimentaire.name, schema: ProduitAlimentaireSchema }]),
     MongooseModule.forFeature([{ name: MaterielConsommable.name, schema: MaterielConsommableSchema }]),
+    MongooseModule.forFeature([{ name: Client.name, schema: ClientSchema }]),
     UserModule,
   ],
   providers: [FacturationService],

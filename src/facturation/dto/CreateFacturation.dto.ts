@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { IsNotEmpty, IsNumber, IsMongoId } from 'class-validator';
+import { IsNotEmpty, IsNumber, IsMongoId, IsString, IsDateString, IsOptional } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateFacturationDto {
@@ -11,20 +11,45 @@ export class CreateFacturationDto {
   @ApiProperty()
   @IsNotEmpty()
   @IsNumber()
+  facture_n?: number;
+
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsString()
+  nom_medecin?: string;
+
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsString()
+  adresse_medecin?: string;
+
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsNumber()
   prixGlobale?: number;
 
   @ApiProperty()
   @IsNotEmpty()
+  @IsDateString()
+   date?: string;
+
+@ApiProperty()
+@IsNotEmpty()
+@IsMongoId()
+clientId?: string;
+
+@ApiProperty()
+  @IsOptional()
   @IsMongoId()
-  medicamentId: string;
+  medicamentId?: string;
 
   @ApiProperty()
-  @IsNotEmpty()
+  @IsOptional()
   @IsMongoId()
-  produitalimentaireId: string;
+  produitalimentaireId?: string;
 
   @ApiProperty()
-  @IsNotEmpty()
+  @IsOptional()
   @IsMongoId()
-  materielconsommableId: string;
+  materielconsommableId?: string;
 }
