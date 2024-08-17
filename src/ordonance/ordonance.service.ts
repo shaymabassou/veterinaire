@@ -34,12 +34,8 @@ export class OrdonnanceService {
   }
 
   async getOrdonnanceById(id: string): Promise<Ordonnance> {
-    const ordonnance = await this.ordonnanceModel.findById(id).populate('animalId').exec();
-    if (!ordonnance) {
-      throw new NotFoundException(`Ordonnance with ID ${id} not found`);
+    return this.ordonnanceModel.findById(id).populate('animalId').exec();
     }
-    return ordonnance;
-  }
 
   async updateOrdonnance(id: string, createOrdonnanceDto: CreateOrdonnanceDto): Promise<Ordonnance> {
     const ordonnance = await this.ordonnanceModel.findByIdAndUpdate(id, createOrdonnanceDto, { new: true }).exec();

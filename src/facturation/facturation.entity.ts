@@ -28,6 +28,10 @@ facture_n: number;
 @Prop({  type: Number })
 tel: number;
 
+// Ajout du champ `status` pour indiquer si la facturation est payée ou impayée
+@Prop({ type: String, enum: ['impayée', 'payée'], default: 'impayée' })
+status: string;
+
 @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Client', required: true })
 clientId: mongoose.Types.ObjectId;
 
@@ -41,6 +45,8 @@ produitalimentaireId?: mongoose.Types.ObjectId;
 @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'MaterielConsommable' })
 materielconsommableId?: mongoose.Types.ObjectId;
 }
+
+  
 
 export const FacturationSchema = SchemaFactory.createForClass(Facturation);
 

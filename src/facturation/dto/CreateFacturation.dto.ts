@@ -46,6 +46,11 @@ clientId?: string;
   @ApiProperty()
   @IsOptional()
   @IsMongoId()
+ status?: string;
+
+  @ApiProperty()
+  @IsOptional()
+  @IsMongoId()
   produitalimentaireId?: string;
 
   @ApiProperty()

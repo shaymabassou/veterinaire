@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
 import { Facturation } from './facturation.entity';
@@ -90,19 +90,26 @@ export class FacturationService {
 
 
 
-  async getFacturationById(id: string): Promise<Facturation> {
-    const facturation = await this.facturationModel.findById(id)
-      .populate('medicamentId')
-      .populate('produitalimentaireId')
-      .populate('materielconsommableId')
-      .populate('clientId').exec();
+async getFacturationById(id: string): Promise<Facturation> {
+  console.log(`Fetching facturation with ID: ${id}`); // Debugging line
 
-    if (!facturation) {
-      throw new NotFoundException(`Facturation with ID ${id} not found`);
-    }
-
-    return facturation;
+  if (!id) {
+    throw new BadRequestException('ID is required');
   }
+
+  const facturation = await this.facturationModel.findById(id)
+    .populate('medicamentId')
+    .populate('produitalimentaireId')
+    .populate('materielconsommableId')
+    .populate('clientId').exec();
+
+  if (!facturation) {
+    throw new NotFoundException(`Facturation with ID ${id} not found`);
+  }
+
+  return facturation;
+}
+
 
   async getAllFacturations(): Promise<Facturation[]> {
     return this.facturationModel.find()
@@ -119,6 +126,10 @@ export class FacturationService {
     }
     return facturation;
   }
+  async updateStatus(id: string, status: string): Promise<Facturation> {
+    return this.facturationModel.findByIdAndUpdate(id, { status }, { new: true });
+  }
+  
 
   async deleteFacturation(id: string): Promise<{ message: string }> {
     const facturation = await this.facturationModel.findByIdAndDelete(id).exec();
